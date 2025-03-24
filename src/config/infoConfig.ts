@@ -1,3 +1,4 @@
+
 export * from './projects'
 export * from './education'
 export * from './career'
@@ -5,8 +6,8 @@ export * from './career'
 // personal info
 export const name = 'SnowCat'
 export const headline = '你好，我是雪豹'
-export const introduction =
-  "你好，我是SnowCat，如果你在一些游戏里面碰到ButterF1y，那也是我"
+export const introduction = `你好，我是SnowCat，如果你在一些游戏里面碰到ButterF1y，那也是我
+左边那个会转的球基本代表了我的技术栈，还给大家埋了彩蛋`
 export const email = 'panmingh@outlook.com'
 export const githubUsername = 'snowcatsmoking'
 
@@ -22,9 +23,7 @@ export const aboutParagraphs = [
 
 // blog
 export const blogHeadLine = "我最近在忙啥？"
-export const blogIntro =
-  "你别管我再忙啥，反正在忙~~"
-  "放点工作周报cos博客给大家看看吧"
+export const blogIntro ='你别管我再忙啥，反正在忙~~\n放点工作周报cos博客给大家看看吧'
 
 // social links
 export type SocialLinkType = {
@@ -66,5 +65,8 @@ export const techIcons = [
   'ios',
   'apple',
   'wechat',
-  'onlyfans'
+  'onlyfans',
+  'langchain',
+  'openai',
+
 ]

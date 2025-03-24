@@ -4,6 +4,7 @@ export type ProjectItemType = {
   description: string
   link: { href: string; label: string }
   tags: string[]
+  icon?: string
 }
 
 export type ActivityItemType = {
@@ -12,6 +13,7 @@ export type ActivityItemType = {
   date: string
   location: string
   link?: string
+  icon?: string
 }
 
 // Awards
@@ -42,25 +44,30 @@ export const projects: Array<ProjectItemType> = [
     name: 'iLEAD领创&&iTeach',
     description: '项目负责人，一手带大（北邮校园网才能点开）',
     link: { href: 'http://10.3.58.3:5173/login', label: 'iTeach' },
-    tags: ['Website', 'Python', 'LLM', 'Rag']
+    tags: ['Website', 'Python', 'LLM', 'Rag'],
+    icon: 'openai'
+
   },
   {
     name: 'BuTP',
     description: 'Cindy老师的项目，职业生涯模拟器',
     link: { href: '#', label: '还在沉淀，望你理解' },
-    tags: ['MySQL', 'Java',"K-Means"]
+    tags: ['MySQL', 'Java',"K-Means"],
+    icon: 'langgraph'
   },
   {
     name: '工创赛智能救援赛道',
     description: '只会纯软件，跟我谈串口就投降',
     link: { href: '#', label: '开发完了，但是不开源' },
-    tags: ['树莓派','OpenCV','Python']
+    tags: ['树莓派','OpenCV','Python'],
+    icon: 'raspberrypi'
   },
   {
     name: 'Jailbreak Template',
     description: '针对垂直领域大模型的红队攻击框架',
     link: { href: '#', label: '还在沉淀，望你理解' },
-    tags: ['Jailbreak', 'LLM','Safety']
+    tags: ['Jailbreak', 'LLM','Safety'],
+    icon: 'langchain'
   },
 ]
 
@@ -76,5 +83,6 @@ export const activities: Array<ActivityItemType> = [
     date: '2024-09',
     location: 'Beijing',
     link:'http://10.3.58.3:5173/login',
+    icon: 'openai'
   },
 ]

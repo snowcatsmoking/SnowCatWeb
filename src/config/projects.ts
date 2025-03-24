@@ -4,7 +4,7 @@ export type ProjectItemType = {
   description: string
   link: { href: string; label: string }
   tags: string[]
-  icon?: string
+  icon: string
 }
 
 export type ActivityItemType = {

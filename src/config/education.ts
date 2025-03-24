@@ -24,7 +24,7 @@ export const educationList: Array<EducationItemType> = [
     end: '2015',
   },
   {
-    school: 'BUPT',
+    school: '扬州中学教育集团树人学校',
     major: 'Automation',
     logo: 'college',
     start: '2009',

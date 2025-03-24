@@ -11,17 +11,18 @@ export const email = 'panmingh@outlook.com'
 export const githubUsername = 'snowcatsmoking'
 
 // about page
-export const aboutMeHeadline = 'Who Are You and Why Should I Care?'
+export const aboutMeHeadline = '我是谁，我又会给你介绍什么'
 export const aboutParagraphs = [
-  "Coucou Les Amis! My name is Derek Hu. I'm from Hubei and an alumnus of BUPT, UChicago, and Tsinghua. I’ve been teaching Computer Science at SCLS since 2020.",
-  'Currently I am working on a new course called AI Camp, an innovative course where high school students create real-world products and startups while exploring the frontiers of AI.',
-  "I started this blog to share the insights I learn every day. Most blogs focus on education in Artificial Intelligence and general computer science, while others share the life lessons I've learned.",
+  "你好，我希望你称我为SnowCat，但是你既然是通过panmingh.com找到我的，那我的真名你应该也知道了",
+  '我是一个北邮在读的学生，专业是电信工程及管理，但是我对计算机有着浓厚的兴趣，所以我会学习一些计算机相关的知识',
+  '我是一个比较低调的人，平时也不怎么发朋友圈和空间，这次大张旗鼓搞个网站就是为了装逼',
+  '我不会把很多个人信息放到这个网站上来，但是我会不断打磨这个网站，主要是用来锻炼技术'
 ]
 
 // blog
-export const blogHeadLine = "What I've thinking about."
+export const blogHeadLine = "我最近在忙啥？"
 export const blogIntro =
-  "I've written something about AI, programming and life."
+  "你别管我再忙啥，反正在忙~~"
 
 // social links
 export type SocialLinkType = {

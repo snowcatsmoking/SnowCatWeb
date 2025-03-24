@@ -4,7 +4,7 @@ export * from './career'
 
 // personal info
 export const name = 'SnowCat'
-export const headline = '北邮在读，电信工程及管理专业'
+export const headline = '你好，我是雪豹'
 export const introduction =
   "你好，我是SnowCat，如果你在一些游戏里面碰到ButterF1y，那也是我"
 export const email = 'panmingh@outlook.com'
@@ -24,6 +24,7 @@ export const aboutParagraphs = [
 export const blogHeadLine = "我最近在忙啥？"
 export const blogIntro =
   "你别管我再忙啥，反正在忙~~"
+  "放点工作周报cos博客给大家看看吧"
 
 // social links
 export type SocialLinkType = {
@@ -35,39 +36,35 @@ export type SocialLinkType = {
 
 export const socialLinks: Array<SocialLinkType> = [
   {
-    name: 'Tiktok',
-    icon: 'tiktok',
-    href: 'https://www.tiktok.com/@harvard?lang=en',
-  },
-  {
     name: 'Bilibili',
     icon: 'bilibili',
-    href: 'https://space.bilibili.com/349721082',
+    href: 'https://space.bilibili.com/1295215102',
   },
 ]
 
 // https://simpleicons.org/
 export const techIcons = [
-  'typescript',
-  'javascript',
-  'supabase',
-  'cloudflare',
+  'milvus',
+  'pytorch',
+  'linux',
+  'raspberrypi',
   'java',
-  'oracle',
+  'valve',
   'mysql',
-  'react',
-  'nodedotjs',
-  'nextdotjs',
-  'prisma',
-  'postgresql',
-  'nginx',
-  'vercel',
+  'valorant',
+  'pycharm',
+  'ieee',
+  'republicofgamers',
+  'intellijidea',
+  'googlechrome',
+  'beijingsubway',
   'docker',
   'git',
   'github',
   'visualstudiocode',
-  'androidstudio',
+  'otto',
   'ios',
   'apple',
   'wechat',
+  'onlyfans'
 ]

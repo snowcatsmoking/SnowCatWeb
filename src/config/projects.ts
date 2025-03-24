@@ -15,81 +15,66 @@ export type ActivityItemType = {
 }
 
 // Awards
-export const awardsHeadLine = "Awards & Honors"
-export const awardsIntro = "Recognition for academic and professional achievements."
+export const awardsHeadLine = "奖项和荣誉（等到要投简历的时候再改）"
+export const awardsIntro = "保持低调，等到要投简历的时候再改"
 
 export const awards: Array<ActivityItemType> = [
   {
-    name: 'Outstanding Teacher Award',
+    name: '最好的2024年',
     description: '',
     date: '2024',
-    location: 'SCLS, Shanghai',
+    location: 'Beijing,Haidian',
   },
   {
-    name: 'Zhui Ying Award',
+    name: '最好的2023年',
     description: '',
     date: '2023',
-    location: 'Qingpu, Shanghai',
+    location: 'Jiangsu,Yangzhou',
   },
 ]
 
 // Research & Projects
-export const projectHeadLine = "Research & Projects"
-export const projectIntro = "Academic research and technical projects I've worked on."
+export const projectHeadLine = "研究&项目"
+export const projectIntro = "这个可以说道说道，我参加的项目一点也不少"
 
 export const projects: Array<ProjectItemType> = [
   {
-    name: 'Student Final Project Portfolio',
-    description: 'Static website portfolio',
-    link: { href: 'scls-cs.com', label: 'GitHub Cards' },
-    tags: ['Website', 'Next.js', 'TailwindCSS', 'DaisyUI', 'Portfolio']
+    name: 'iLEAD领创&&iTeach',
+    description: '项目负责人，一手带大（北邮校园网才能点开）',
+    link: { href: 'http://10.3.58.3:5173/login', label: 'iTeach' },
+    tags: ['Website', 'Python', 'LLM', 'Rag']
   },
   {
-    name: 'Seeking DNA',
-    description: '2022 SCLS Hackathon',
-    link: { href: 'https://scls-cs.gitbook.io/scls-apcs-lab/lab5-dna', label: 'Hackathon' },
-    tags: ['Hackathon', 'Java']
+    name: 'BuTP',
+    description: 'Cindy老师的项目，职业生涯模拟器',
+    link: { href: '#', label: '还在沉淀，望你理解' },
+    tags: ['MySQL', 'Java',"K-Means"]
   },
   {
-    name: 'Texas Holdem Poker Judge',
-    description: '2024 SCLS Hackathon',
-    link: { href: 'https://onecompiler.com/challenges/42yf4n5yn/scls-hackathon', label: 'Hackathon' },
-    tags: ['Hackathon']
+    name: '工创赛智能救援赛道',
+    description: '只会纯软件，跟我谈串口就投降',
+    link: { href: '#', label: '开发完了，但是不开源' },
+    tags: ['树莓派','OpenCV','Python']
   },
   {
-    name: 'AI Camp Course Development',
-    description: 'Developed a comprehensive AI curriculum for high school students, incorporating real-world projects and startup concepts.',
-    link: { href: 'https://scls-cs.gitbook.io/ai-camp', label: 'View Course' },
-    tags: ['Education', 'AI']
+    name: 'Jailbreak Template',
+    description: '针对垂直领域大模型的红队攻击框架',
+    link: { href: '#', label: '还在沉淀，望你理解' },
+    tags: ['Jailbreak', 'LLM','Safety']
   },
 ]
 
 // Hobbies & Volunteer
-export const activitiesHeadLine = "Hobbies & Volunteer"
-export const activitiesIntro = "Personal interests and community contributions."
+export const activitiesHeadLine = "兴趣和志愿"
+export const activitiesIntro = "个人兴趣和社区贡献"
 
 export const activities: Array<ActivityItemType> = [
   {
-    name: 'Python Workshop',
+    name: 'iLEAD&&iTeach',
     description:
-      'Teaching basic Python programming concepts to beginners. Covering variables, control flow, and functions.',
-    date: '2024-02-24',
-    location: 'Shanghai',
-    link: 'https://example.com/python-workshop',
-  },
-  {
-    name: 'AI Ethics Discussion',
-    description:
-      'A group discussion about the ethical implications of AI development and its impact on society.',
-    date: '2024-03-01',
-    location: 'Shanghai',
-    link: 'https://example.com/ai-ethics',
-  },
-  {
-    name: 'Code Review Session',
-    description:
-      'Helping students improve their coding skills through peer code review and best practices sharing.',
-    date: '2024-03-15',
-    location: 'Shanghai',
+      '工作即兴趣，等这个项目发展到位，我们再继续努力',
+    date: '2024-09',
+    location: 'Beijing',
+    link:'http://10.3.58.3:5173/login',
   },
 ]

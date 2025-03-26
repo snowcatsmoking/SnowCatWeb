@@ -43,10 +43,9 @@ export const projects: Array<ProjectItemType> = [
   {
     name: 'iLEAD领创&&iTeach',
     description: '项目负责人，一手带大（北邮校园网才能点开）',
-    link: { href: 'http://10.3.58.3:5173/login', label: 'iTeach' },
+    link: { href: '10.3.58.3:5173', label: 'iTeach' },
     tags: ['Website', 'Python', 'LLM', 'Rag'],
     icon: 'openai'
-
   },
   {
     name: 'BuTP',

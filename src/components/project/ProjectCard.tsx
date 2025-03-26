@@ -7,17 +7,35 @@ import { ProjectItemType } from '@/config/infoConfig'
 import { utm_source } from '@/config/siteConfig'
 import Link from 'next/link'
 import { Favicon } from "favicon-stealer";
+import { useTheme } from 'next-themes'
 
 export function ProjectCard({ project, titleAs }: { project: ProjectItemType, titleAs?: keyof JSX.IntrinsicElements }) {
-  const utmLink = `https://${project.link.href}?utm_source=${utm_source}`
+  const utmLink = project.link.href.includes('http') 
+    ? `${project.link.href}?utm_source=${utm_source}`
+    : `http://${project.link.href}?utm_source=${utm_source}`
   let Component = titleAs ?? 'h2'
+  const { resolvedTheme } = useTheme()
+  
   return (
     <li className='group relative flex flex-col items-start h-full'>
       <div className="relative flex flex-col justify-between h-full w-full p-4 rounded-2xl border border-muted-foreground/20 shadow-sm transition-all group-hover:scale-[1.03] group-hover:shadow-md group-hover:bg-muted/5">
         <div className=''>
           <div className='flex flex-col sm:flex-row justify-center sm:justify-start items-start sm:items-center gap-4'>
             <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full">
-              <Favicon url={project.link.href} />
+              {project.icon ? (
+                <div className="w-8 h-8 text-foreground">
+                  <Image
+                    src={`/images/icon/${project.icon}.svg`}
+                    alt={`${project.name} icon`}
+                    width={32}
+                    height={32}
+                    className="object-contain [&>path]:fill-current"
+                    priority
+                  />
+                </div>
+              ) : (
+                <Favicon url={project.link.href} />
+              )}
             </div>
             <Component className="text-base font-semibold">
               {project.name}

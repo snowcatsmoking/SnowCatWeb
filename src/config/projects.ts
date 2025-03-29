@@ -68,6 +68,13 @@ export const projects: Array<ProjectItemType> = [
     tags: ['Jailbreak', 'LLM','Safety'],
     icon: 'langchain'
   },
+  {
+    name: '“弗一把”信息熵脚本',
+    description: '信息熵计算脚本，用最少次数解决“弗一把”问题',
+    link: { href: 'https://github.com/snowcatsmoking/forsaken', label: '开源项目，欢迎star' },
+    tags: ['Python','Hobbies'],
+    icon: 'counterstrike'
+  },
 ]
 
 // Hobbies & Volunteer

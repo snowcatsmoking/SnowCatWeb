@@ -27,7 +27,18 @@ export const awards: Array<ActivityItemType> = [
     date: '2025',
     location: 'Beijing,Haidian',
   },
-  
+  {
+    name: '北京邮电大学三等奖学金',
+    description: '',
+    date: '2024',
+    location: 'Beijing,Haidian',
+  },
+  {
+    name: '大学生网络与信息技术大赛',
+    description: '赛道三：全国三等奖',
+    date: '2024',
+    location: 'Beijing,Haidian',
+  },
 ]
 
 // Research & Projects
@@ -75,7 +86,6 @@ export const projects: Array<ProjectItemType> = [
 // Hobbies & Volunteer
 export const activitiesHeadLine = "兴趣和志愿"
 export const activitiesIntro = "个人兴趣和社区贡献"
-
 export const activities: Array<ActivityItemType> = [
   {
     name: 'iLEAD&&iTeach',

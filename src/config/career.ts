@@ -11,27 +11,27 @@ export type CareerItemType = {
 export const careerList: Array<CareerItemType> = [
     {
       company: 'NTU红队攻击科研实习',
-      title: 'RA（自己编的，实则没有职称）',
+      title: '暂无',
       logo: 'college',
       start: '2025',
       end: 'Present'
     },
     {
-      company: 'iLEAD领创&&iTeach',
+      company: 'iLEAD领创',
       title: '项目负责人',
       logo: 'college',
       start: '2024',
       end: 'Present'
     },
     {
-      company: 'BuTP',
+      company: 'BuTP职业生涯规划',
       title: '项目经理',
       logo: 'college',
       start: '2024',
       end: 'Present'
     },
     {
-      company: '团委综合办公室（嘿嘿，我还干过团委）',
+      company: '团委综合办公室',
       title: '干事',
       logo: 'college',
       start: '2023',

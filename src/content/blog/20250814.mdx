@@ -1,0 +1,73 @@
+---
+title: '暑假工作简述'
+description: '20250814，简单介绍一下暑假的工作和学习的内容'
+date: '2025-08-14'
+tags: ['Deception', 'TEE', 'Hallucination','NMI']
+
+---
+
+暑假即将结束，简单介绍一下暑假接触的项目以及相关的方向。
+
+## 1. Deception
+
+暑期深入了关于LLM Safety的研究，深入研究Deception欺骗这个概念。总结关于Deception的定义和分类。
+
+### 欺骗的定义：
+
+参考论文依旧处于Pre-Print状态，无链接可放。
+
+AI给出一个信号Y（Answer）给User，User因为这个信号Y产生了一个belief X，因为这个belief X做出了一个行为A。然后在这个流程中满足了以下条件的过程称为欺骗。
+
+- 最终做的这个行为A对AI带来了正向收益，这个正向收益的概念很广泛，包括满意度提升（谄媚），评测分数提升（伪对齐），达成一定目的（Scheming）
+- A与X之间存在合理的因果关系（排除了User是智障的可能）
+- X是客观错误的
+
+### 欺骗的分类：（分类灵感来源Mitigation Deception）
+
+https://arxiv.org/abs/2505.18807
+
+- Sycophancy谄媚
+- Scheming策略欺骗
+- Sandbagging韬光养晦
+- Alignment Faking伪对齐
+- Honesty Evasion诚实回避
+
+### 目前的进度
+
+目前正在尝试探索Reasoning Model在产生欺骗现象的时候其CoT中会不会产生同一或相似的文字模板，如能发现类似模板，将使用一些可解释性方法做Attention切片获取Attention分布，并尝试做Deception抑制。
+
+简单跑了一下吉嘉铭博士组的DeceptionBench，得出一点点规律，但是需要更多的实验证明。
+
+https://huggingface.co/datasets/PKU-Alignment/DeceptionBench
+
+## 2. TEE及Inference加速
+
+暑期在UCAS的科研实习在第三研究室数组共享组，研究Inference过程的安全。
+
+虽然你说Inference的安全肯定是LLM Safety的一部分，但是总有一种说不上来的感觉，感觉这个Part就很像是研究网安的人研究LLM Safety研究的方向。
+
+因为他也不在Kun Wang的Ful Stack LLM Safety综述里面，但是你要说他完全不是LLM Safety的一部分，感觉也不对。
+
+https://arxiv.org/abs/2504.15585
+
+研究内容不方便多说，感谢Mentor刘东博士的关照，给我布置的任务大多涉及研究生基本功，给了我学习模型原理了解模型代码的机会。
+
+## 3. Reasoning VLLM的幻觉抑制
+
+暑期在CBL的论文组中参与一些实验工作和调研工作，研究Reasoning VLLM的幻觉抑制工作。
+
+研究内容不方便多说，不然CBL会过来打死我。
+
+## 4. NMI Preparation
+
+**在准备Nature Machine Intelligence的内容，帮LHL学长做调研工作，我现在是Cognitive psychology领域大神。**
+
+**NMI要求论文需要跨学科融合，因此选择用认知心理学来套LLM内生安全的几个点：Deception，Hallucination，Refusal Failure。**
+
+**我主要负责Cognitive psychology里面的部分，现在我对Cognitive psychology有一些些的了解，包括EF（执行功能），CC（认知控制）。但是你要是问我具体是什么意思，我也不知道。**
+
+---
+
+# 简单总结
+
+这个暑假兼任的工作有点多，非常非常的忙碌。什么地方都了解了一些，对于科研的流程、方向、领域的前沿，都有了一些新的体验。感谢各位学长和老师给的机会和帮助。开学之后继续学习。

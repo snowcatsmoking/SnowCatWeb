@@ -24,8 +24,7 @@ export const aboutParagraphs = [
 
 // blog
 export const blogHeadLine = "我最近在忙啥？"
-export const blogIntro =`你别管我在忙啥，反正在忙~~。
-放点工作周报cos博客给大家看看吧。`
+export const blogIntro =`暑期工作繁忙，开学后尝试稳定更新。部分工作仍在进行中恕难详解。`
 
 // social links
 export type SocialLinkType = {

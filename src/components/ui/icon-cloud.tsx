@@ -9,6 +9,8 @@ import {
   renderSimpleIcon,
   SimpleIcon,
 } from "react-icon-cloud";
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
+import { Loading } from "@/components/shared/Loading";
 
 export const cloudProps: Omit<ICloud, "children"> = {
   containerProps: {
@@ -66,10 +68,16 @@ type IconData = Awaited<ReturnType<typeof fetchSimpleIcons>>;
 export default function IconCloud({ iconSlugs }: DynamicCloudProps) {
   const [data, setData] = useState<IconData | null>(null);
   const { theme } = useTheme();
+  const { isIntersecting, targetRef } = useIntersectionObserver({
+    threshold: 0.1,
+    triggerOnce: true,
+  });
 
   useEffect(() => {
-    fetchSimpleIcons({ slugs: iconSlugs }).then(setData);
-  }, [iconSlugs]);
+    if (isIntersecting) {
+      fetchSimpleIcons({ slugs: iconSlugs }).then(setData);
+    }
+  }, [iconSlugs, isIntersecting]);
 
   const renderedIcons = useMemo(() => {
     if (!data) return null;
@@ -80,9 +88,23 @@ export default function IconCloud({ iconSlugs }: DynamicCloudProps) {
   }, [data, theme]);
 
   return (
-    // @ts-ignore
-    <Cloud {...cloudProps}>
-      <>{renderedIcons}</>
-    </Cloud>
+    <div ref={targetRef as any} className="w-full h-full min-h-[400px]">
+      {isIntersecting ? (
+        data ? (
+          // @ts-ignore
+          <Cloud {...cloudProps}>
+            <>{renderedIcons}</>
+          </Cloud>
+        ) : (
+          <div className="flex items-center justify-center h-full">
+            <Loading text="正在加载技术栈..." />
+          </div>
+        )
+      ) : (
+        <div className="flex items-center justify-center h-full bg-muted/20 rounded-lg">
+          <span className="text-muted-foreground">技术栈云图</span>
+        </div>
+      )}
+    </div>
   );
 }

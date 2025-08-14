@@ -2,12 +2,14 @@
 
 import { memo, useMemo } from 'react'
 import { HashIcon } from 'lucide-react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight } from '@phosphor-icons/react'
 import { Favicon } from "favicon-stealer"
 import { ProjectItemType } from '@/config/infoConfig'
 import { utm_source } from '@/config/siteConfig'
+import { ThemedIcon } from '@/components/shared/ThemedIcon'
+import { addUtmParams, cn } from '@/lib/utils'
+import { ANIMATION_DURATION } from '@/lib/constants'
 
 interface ProjectCardProps {
   project: ProjectItemType
@@ -16,9 +18,7 @@ interface ProjectCardProps {
 
 export const ProjectCard = memo(function ProjectCard({ project, titleAs }: ProjectCardProps) {
   const utmLink = useMemo(() => 
-    project.link.href.includes('http') 
-      ? `${project.link.href}?utm_source=${utm_source}`
-      : `http://${project.link.href}?utm_source=${utm_source}`,
+    addUtmParams(project.link.href, utm_source),
     [project.link.href]
   )
   
@@ -26,20 +26,24 @@ export const ProjectCard = memo(function ProjectCard({ project, titleAs }: Proje
   
   return (
     <li className='group relative flex flex-col items-start h-full'>
-      <div className="relative flex flex-col justify-between h-full w-full p-6 rounded-2xl border border-muted-foreground/20 shadow-sm transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-xl group-hover:bg-muted/10 group-hover:border-muted-foreground/30">
+      <div className={cn(
+        "relative flex flex-col justify-between h-full w-full p-6 rounded-2xl",
+        "border border-muted-foreground/20 shadow-sm bg-card backdrop-blur-sm",
+        "transition-all group-hover:scale-[1.02] group-hover:shadow-xl",
+        "group-hover:bg-muted/10 group-hover:border-muted-foreground/30",
+        "group-hover:-translate-y-1"
+      )} style={{ transitionDuration: `${ANIMATION_DURATION.normal}ms` }}>
         <div className=''>
           <div className='flex flex-col sm:flex-row justify-center sm:justify-start items-start sm:items-center gap-4'>
             <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-muted/50 transition-colors group-hover:bg-muted/80">
               {project.icon ? (
-                <div className="w-8 h-8 text-foreground">
-                  <Image
-                    src={`/images/icon/${project.icon}.svg`}
-                    alt={`${project.name} icon`}
-                    width={32}
-                    height={32}
-                    className="object-contain [&>path]:fill-current"
-                  />
-                </div>
+                <ThemedIcon 
+                  iconName={project.icon}
+                  alt={`${project.name} icon`}
+                  width={32}
+                  height={32}
+                  className="w-8 h-8"
+                />
               ) : (
                 <Favicon url={project.link.href} />
               )}

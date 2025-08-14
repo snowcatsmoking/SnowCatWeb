@@ -1,6 +1,7 @@
 import { type MDXComponents } from 'mdx/types'
 import Image, { type ImageProps } from 'next/image'
 import Link from 'next/link'
+import { HTMLAttributes } from 'react'
 
 const CustomLink = (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
   const href = props.href
@@ -33,50 +34,52 @@ const CustomLink = (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
 
 export const mdxComponents: MDXComponents = {
   Image: (props: ImageProps) => (
-    <Image {...props} className="my-6 rounded-3xl" />
+    <Image {...props} alt={props.alt || ''} className="my-6 rounded-3xl" />
   ),
   a: CustomLink,
-  h1: (props: any) => (
+  h1: (props: HTMLAttributes<HTMLHeadingElement>) => (
     <h1
       className="my-6 text-4xl font-bold tracking-tight sm:text-5xl"
       {...props}
     />
   ),
-  h2: (props: any) => (
+  h2: (props: HTMLAttributes<HTMLHeadingElement>) => (
     <h2
       className="my-6 text-3xl font-bold tracking-tight sm:text-4xl"
       {...props}
     />
   ),
-  h3: (props: any) => (
+  h3: (props: HTMLAttributes<HTMLHeadingElement>) => (
     <h3
       className="my-6 text-2xl font-bold tracking-tight sm:text-3xl"
       {...props}
     />
   ),
-  p: (props: any) => <p className="my-6 text-base opacity-80" {...props} />,
-  ul: (props: any) => (
+  p: (props: HTMLAttributes<HTMLParagraphElement>) => (
+    <p className="my-6 text-base opacity-80" {...props} />
+  ),
+  ul: (props: HTMLAttributes<HTMLUListElement>) => (
     <ul
       className="my-6 mt-6 list-inside list-disc text-base opacity-80"
       {...props}
     />
   ),
-  ol: (props: any) => (
+  ol: (props: HTMLAttributes<HTMLOListElement>) => (
     <ol
       className="my-6 mt-6 list-inside list-decimal text-base opacity-80"
       {...props}
     />
   ),
-  blockquote: (props: any) => (
+  blockquote: (props: HTMLAttributes<HTMLQuoteElement>) => (
     <blockquote
       className="my-6 border-l-4 border-zinc-300 pl-4 italic dark:border-zinc-700"
       {...props}
     />
   ),
-  code: (props: any) => (
-    <code className="my-6 rounded-lg px-1 py-0.5" {...props} />
+  code: (props: HTMLAttributes<HTMLElement>) => (
+    <code className="my-6 rounded-lg px-1 py-0.5 bg-muted" {...props} />
   ),
-  pre: (props: any) => (
+  pre: (props: HTMLAttributes<HTMLPreElement>) => (
     <pre
       className="my-6 overflow-x-auto rounded-3xl bg-muted p-6 text-sm tracking-tight text-muted-foreground"
       {...props}

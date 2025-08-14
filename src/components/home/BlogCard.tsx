@@ -1,8 +1,14 @@
+import { memo } from 'react'
 import { Card } from '@/components/shared/Card'
 import { formatDate } from '@/lib/formatDate'
 import { type BlogType } from '@/lib/blogs'
 
-export function BlogCard({ blog, titleAs }: { blog: BlogType, titleAs?: keyof JSX.IntrinsicElements }) {
+interface BlogCardProps {
+  blog: BlogType
+  titleAs?: keyof JSX.IntrinsicElements
+}
+
+export const BlogCard = memo(function BlogCard({ blog, titleAs }: BlogCardProps) {
   const as = titleAs ?? 'h2'
   return (
     <Card as="article">
@@ -16,4 +22,4 @@ export function BlogCard({ blog, titleAs }: { blog: BlogType, titleAs?: keyof JS
       <Card.Cta>Read blog</Card.Cta>
     </Card>
   )
-}
+})

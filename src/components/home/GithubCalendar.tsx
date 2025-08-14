@@ -1,32 +1,27 @@
 'use client'
 
+import { memo, useMemo } from 'react'
+import { useTheme } from 'next-themes'
 import GitHubCalendar from 'react-github-calendar'
 import { githubUsername } from '@/config/infoConfig'
 
+const GithubContributions = memo(function GithubContributions() {
+  const { resolvedTheme } = useTheme()
+  
+  const calendarProps = useMemo(() => ({
+    username: githubUsername,
+    fontSize: 12,
+    blockSize: 12,
+    blockMargin: 5,
+    blockRadius: 4,
+    colorScheme: resolvedTheme === 'dark' ? 'dark' as const : 'light' as const,
+  }), [resolvedTheme])
 
-export default function GithubContributions() {
   return (
     <div className="w-full overflow-hidden">
-      <div className='dark:hidden'>
-        <GitHubCalendar
-          username={githubUsername}
-          colorScheme='light'
-          fontSize={12}
-          blockSize={12}
-          blockMargin={5}
-          blockRadius={4}
-        />
-      </div>
-      <div className='hidden dark:block'>
-        <GitHubCalendar
-          username={githubUsername}
-          colorScheme='dark'
-          fontSize={12}
-          blockSize={12}
-          blockMargin={5}
-          blockRadius={4}
-        />
-      </div>
+      <GitHubCalendar {...calendarProps} />
     </div>
   )
-}
+})
+
+export default GithubContributions

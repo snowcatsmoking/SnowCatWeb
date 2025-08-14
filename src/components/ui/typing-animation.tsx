@@ -18,20 +18,24 @@ export default function TypingAnimation({
   const [displayedText, setDisplayedText] = useState<string>('')
   const [i, setI] = useState<number>(0)
 
+  // Reset animation when text changes
   useEffect(() => {
-    const typingEffect = setInterval(() => {
-      if (i < text.length) {
-        setDisplayedText(text.substring(0, i + 1))
-        setI(i + 1)
-      } else {
-        clearInterval(typingEffect)
-      }
+    setDisplayedText('')
+    setI(0)
+  }, [text])
+
+  useEffect(() => {
+    if (i >= text.length) return
+
+    const typingEffect = setTimeout(() => {
+      setDisplayedText(text.substring(0, i + 1))
+      setI(i + 1)
     }, duration)
 
     return () => {
-      clearInterval(typingEffect)
+      clearTimeout(typingEffect)
     }
-  }, [duration, i])
+  }, [duration, i, text])
 
   return (
     <h1

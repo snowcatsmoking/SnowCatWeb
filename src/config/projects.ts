@@ -63,7 +63,7 @@ export const projects: Array<ProjectItemType> = [
     description: 'ICLR在投，第五作者',
     link: { href: 'https://arxiv.org/abs/2510.10285', label: 'ICLR' },
     tags: ['MLLM', 'Inner Safety'],
-    icon: 'arxiv'
+    icon: 'googlescholar'
   },
   {
     name: 'iLEAD领创',
@@ -91,7 +91,7 @@ export const projects: Array<ProjectItemType> = [
     description: '信工所实习期间共著论文，第四作者',
     link: { href: '#', label: '还在沉淀，望你理解' },
     tags: ['LLM','Security'],
-    icon: 'arxiv'
+    icon: 'googlescholar'
   },
   {
     name: '“弗一把”信息熵脚本',

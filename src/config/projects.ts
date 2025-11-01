@@ -22,6 +22,18 @@ export const awardsIntro = "主要记录大学之后获得的奖项"
 
 export const awards: Array<ActivityItemType> = [
   {
+    name: 'ICLR2026在投',
+    description: '多模态幻觉相关，第五作者',
+    date: '2025',
+    location: 'Rio de Janeiro, Brazil',
+  },
+  {
+    name: 'ICASSP2026在投',
+    description: 'LLM Security相关，第四作者',
+    date: '2025',
+    location: 'Barcelona, Spain',
+  },
+  {
     name: '大学生工程创新竞赛',
     description: '智能救援赛道北京市一等奖',
     date: '2025',
@@ -47,6 +59,13 @@ export const projectIntro = "这个可以说道说道，我参加的项目一点
 
 export const projects: Array<ProjectItemType> = [
   {
+    name: '多模态模型幻觉抑制',
+    description: 'ICLR在投，第五作者',
+    link: { href: 'https://arxiv.org/abs/2510.10285', label: 'ICLR' },
+    tags: ['MLLM', 'Inner Safety'],
+    icon: 'arxiv'
+  },
+  {
     name: 'iLEAD领创',
     description: '项目负责人（北邮校园网才能点开）',
     link: { href: '10.3.58.3:5173', label: 'iTeach' },
@@ -68,11 +87,11 @@ export const projects: Array<ProjectItemType> = [
     icon: 'raspberrypi'
   },
   {
-    name: 'Jailbreak Template',
-    description: '针对垂直领域大模型的红队攻击框架',
+    name: 'CorrEctor（ICASSP在投）',
+    description: '信工所实习期间共著论文，第四作者',
     link: { href: '#', label: '还在沉淀，望你理解' },
-    tags: ['Jailbreak', 'LLM','Safety'],
-    icon: 'langchain'
+    tags: ['LLM','Security'],
+    icon: 'arxiv'
   },
   {
     name: '“弗一把”信息熵脚本',

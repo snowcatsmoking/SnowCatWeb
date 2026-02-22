@@ -7,6 +7,7 @@ export const name = 'SnowCat'
 export const headline = 'Hello, My name is Panmingh'
 export const introduction = `
 I go by many names on the internet. If you come across Panmingh, SnowCat, Butterf1y, or Panminway, they all refer to me. 
+Chinese Version of this website is yet to be developed, thank you for your understanding.
 In any case, it’s nice to meet you.😃`;
 export const email = 'panmingh@outlook.com'
 export const githubUsername = 'snowcatsmoking'
@@ -48,6 +49,12 @@ export const socialLinks: Array<SocialLinkType> = [
     href: 'https://space.bilibili.com/1295215102',
   },
   {
+    name: 'HuggingFace',
+    ariaLabel: 'HuggingFace Profile',
+    icon: 'simlely',
+    href: 'https://huggingface.co/Panminghui',
+  },
+  {
     name: 'OpenReview',
     ariaLabel: 'OpenReview Profile',
     icon: 'openreview',
@@ -71,4 +78,7 @@ export const techIcons = [
   'langgraph',
   'arxiv',
   'raspberrypi',
+  'nvidia',
+  'notion',
+  'claude',
 ]

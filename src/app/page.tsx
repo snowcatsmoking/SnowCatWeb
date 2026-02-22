@@ -1,5 +1,4 @@
 import { Container } from '@/components/layout/Container'
-import Newsletter from '@/components/home/Newsletter'
 import Career from '@/components/home/Career'
 import Education from '@/components/home/Education'
 import SocialLinks from '@/components/home/SocialLinks'
@@ -10,7 +9,7 @@ import { ProjectCard } from '@/components/project/ProjectCard'
 import { ActivityCard } from '@/components/home/ActivityCard'
 import { projectHeadLine, projectIntro, projects, blogHeadLine, blogIntro } from '@/config/infoConfig'
 import { awards, awardsHeadLine, awardsIntro, activities, activitiesHeadLine, activitiesIntro } from '@/config/projects'
-// import IconCloud from "@/components/ui/icon-cloud"
+import TechIconGrid from '@/components/home/TechIconGrid'
 import { Award, Briefcase, Heart } from 'lucide-react'
 
 export default async function Home() {
@@ -20,21 +19,23 @@ export default async function Home() {
     <>
       <Container className="mt-9">
         {/* personal info */}
-        <div className="mb-10">
+        <div className="mb-10 grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-8 items-start">
           <div className='md:mt-20'>
             <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl opacity-80">
               {headline}
             </h2>
             <div className="mt-6 space-y-4 text-xl text-muted-foreground">
               {introduction.split('\n').filter(Boolean).map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
+                <p key={index} className={paragraph.startsWith('Chinese Version') ? 'font-semibold text-teal-600 dark:text-teal-400' : ''}>
+                  {paragraph}
+                </p>
               ))}
             </div>
-            <SocialLinks className='md:mt-24'/>
+            <SocialLinks className='mt-4 md:mt-4'/>
           </div>
-          {/* <div className="relative flex size-full items-center justify-center overflow-hidden w-full px-20 md:px-0 md:w-2/3 ml-auto md:mr-8">
-            <IconCloud iconSlugs={techIcons} />
-          </div> */}
+          <div className="md:mt-20 px-4">
+            <TechIconGrid />
+          </div>
         </div>
         {/* Research & Projects */}
         <div className="mx-auto flex flex-col max-w-xl gap-6 lg:max-w-none my-4 py-8 border-t border-muted">

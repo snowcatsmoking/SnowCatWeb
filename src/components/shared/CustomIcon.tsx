@@ -15,6 +15,7 @@ import {
   LinkedinLogo,
   Television,
   TiktokLogo,
+  Smiley,
 } from '@phosphor-icons/react'
 
 export function CustomIcon({
@@ -55,6 +56,8 @@ export function CustomIcon({
       return <Television size={size} weight="duotone" />
     case 'openreview':
       return <GraduationCap size={size} weight="duotone" />
+    case 'huggingface':
+      return <Smiley size={size} weight="duotone" />
     default:
       return null
   }

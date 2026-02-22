@@ -51,7 +51,7 @@ export const socialLinks: Array<SocialLinkType> = [
   {
     name: 'HuggingFace',
     ariaLabel: 'HuggingFace Profile',
-    icon: 'simlely',
+    icon: 'huggingface',
     href: 'https://huggingface.co/Panminghui',
   },
   {

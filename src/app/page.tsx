@@ -8,9 +8,9 @@ import { BlogCard } from '@/components/home/BlogCard'
 import { getAllBlogs, type BlogType } from '@/lib/blogs'
 import { ProjectCard } from '@/components/project/ProjectCard'
 import { ActivityCard } from '@/components/home/ActivityCard'
-import { projectHeadLine, projectIntro, projects, blogHeadLine, blogIntro, techIcons } from '@/config/infoConfig'
+import { projectHeadLine, projectIntro, projects, blogHeadLine, blogIntro } from '@/config/infoConfig'
 import { awards, awardsHeadLine, awardsIntro, activities, activitiesHeadLine, activitiesIntro } from '@/config/projects'
-import IconCloud from "@/components/ui/icon-cloud"
+// import IconCloud from "@/components/ui/icon-cloud"
 import { Award, Briefcase, Heart } from 'lucide-react'
 
 export default async function Home() {
@@ -20,7 +20,7 @@ export default async function Home() {
     <>
       <Container className="mt-9">
         {/* personal info */}
-        <div className="mb-10 grid grid-cols-1 md:grid-cols-2">
+        <div className="mb-10">
           <div className='md:mt-20'>
             <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl opacity-80">
               {headline}
@@ -32,27 +32,10 @@ export default async function Home() {
             </div>
             <SocialLinks className='md:mt-24'/>
           </div>
-          <div className="relative flex size-full items-center justify-center overflow-hidden w-full px-20 md:px-0 md:w-2/3 ml-auto md:mr-8">
+          {/* <div className="relative flex size-full items-center justify-center overflow-hidden w-full px-20 md:px-0 md:w-2/3 ml-auto md:mr-8">
             <IconCloud iconSlugs={techIcons} />
-          </div>
+          </div> */}
         </div>
-
-        {/* Awards */}
-        <div className="mx-auto flex flex-col max-w-xl gap-6 lg:max-w-none my-4 py-8 border-t border-muted">
-          <h2 className="flex flex-row items-center justify-start gap-2 text-xl font-semibold tracking-tight md:text-3xl opacity-80 mb-4">
-            <Award size={28}/>
-            {awardsHeadLine}
-          </h2>
-          <ul
-            role="list"
-            className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 md:grid-cols-3"
-          >
-            {awards.map((award) => (
-              <ActivityCard key={award.name} activity={award} titleAs='h3'/>
-            ))}
-          </ul>
-        </div>
-
         {/* Research & Projects */}
         <div className="mx-auto flex flex-col max-w-xl gap-6 lg:max-w-none my-4 py-8 border-t border-muted">
           <h2 className="flex flex-row items-center justify-start gap-2 text-xl font-semibold tracking-tight md:text-3xl opacity-80 mb-4">
@@ -71,7 +54,24 @@ export default async function Home() {
             ))}
           </ul>
         </div>
-
+        {/* Awards */}
+        <div className="mx-auto flex flex-col max-w-xl gap-6 lg:max-w-none my-4 py-8 border-t border-muted">
+          <h2 className="flex flex-row items-center justify-start gap-2 text-xl font-semibold tracking-tight md:text-3xl opacity-80 mb-4">
+            <Award size={28}/>
+            {awardsHeadLine}
+          </h2>
+          <p className="text-base text-muted-foreground max-w-2xl mb-8">
+            {awardsIntro}
+          </p>
+          <ul
+            role="list"
+            className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 md:grid-cols-3"
+          >
+            {awards.map((award) => (
+              <ActivityCard key={award.name} activity={award} titleAs='h3'/>
+            ))}
+          </ul>
+        </div>
         {/* Hobbies & Volunteer */}
         <div className="mx-auto flex flex-col max-w-xl gap-6 lg:max-w-none my-4 py-8 border-t border-muted">
           <h2 className="flex flex-row items-center justify-start gap-2 text-xl font-semibold tracking-tight md:text-3xl opacity-80 mb-4">

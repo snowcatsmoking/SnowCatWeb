@@ -11,7 +11,6 @@ import { Container } from '@/components/layout/Container'
 import avatarImage from '@/images/avatar.jpg'
 import { navItems } from '@/config/siteConfig'
 import { ThemeToggle } from '@/components/shared/ThemeToggle'
-import { GithubRepo } from '@/components/shared/GithubRepo'
 import { name } from '@/config/infoConfig'
 import { ChevronDownIcon, XIcon } from 'lucide-react'
 
@@ -411,7 +410,6 @@ export function Header() {
               <div className="flex justify-end md:flex-1">
                 <div className="pointer-events-auto flex flex-row items-center gap-2 md:mr-2">
                   <ThemeToggle />
-                  <GithubRepo />
                 </div>
               </div>
             </div>

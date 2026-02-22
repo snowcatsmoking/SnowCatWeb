@@ -12,7 +12,7 @@ export default function SocialLinks({ className }: { className?: string }) {
             {socialLinks.map((link) => (
                 <Link
                     key={link.name}
-                    href={`${link.href}?utm_source=${utm_source}`}
+                    href={`${link.href}${link.href.includes('?') ? '&' : '?'}utm_source=${utm_source}`}
                     target="_blank"
                     rel="noreferrer"
                     aria-label={link.ariaLabel ?? `Follow on ${link.name}`}

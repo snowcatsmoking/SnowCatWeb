@@ -53,6 +53,8 @@ export function CustomIcon({
       return <TiktokLogo size={size} weight="duotone" />
     case 'bilibili':
       return <Television size={size} weight="duotone" />
+    case 'openreview':
+      return <GraduationCap size={size} weight="duotone" />
     default:
       return null
   }

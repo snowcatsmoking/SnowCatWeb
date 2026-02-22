@@ -1,7 +1,7 @@
 "use client"
 
 import Link from 'next/link'
-import { email, socialLinks } from '@/config/infoConfig'
+import { email, socialLinks, wechat } from '@/config/infoConfig'
 import { CustomIcon } from '@/components/shared/CustomIcon'
 
 
@@ -23,7 +23,7 @@ export default function SocialLinks() {
                     </Link>
                 ))}
             </div>
-            <div className="mt-8 border-t pt-8 ">
+            <div className="mt-8 border-t pt-8 space-y-4">
                 <Link
                     href={`mailto:${email}`}
                     className="group flex flex-row ml-3 justify-start items-center text-md font-medium transition hover:text-teal-500 dark:text-zinc-200 dark:hover:text-teal-500"
@@ -31,6 +31,10 @@ export default function SocialLinks() {
                     <CustomIcon name="email" size={22}/>
                     <span className="ml-4">{email}</span>
                 </Link>
+                <div className="flex flex-row ml-3 items-center text-md font-medium dark:text-zinc-200">
+                    <CustomIcon name="wechat" size={22}/>
+                    <span className="ml-4">{wechat}</span>
+                </div>
             </div>
         </div>
 

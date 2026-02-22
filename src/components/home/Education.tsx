@@ -1,7 +1,4 @@
-"use client"
-
-
-import { Student } from '@phosphor-icons/react'
+import { GraduationCap } from 'lucide-react'
 import { EducationItemType, educationList } from '@/config/infoConfig'
 import { CustomIcon } from '@/components/shared/CustomIcon'
 
@@ -41,7 +38,7 @@ export default function Education() {
   return (
     <div className="rounded-2xl border border-muted shadow-sm p-6">
       <h2 className="flex text-sm font-semibold">
-        <Student size={24} weight="duotone" />
+        <GraduationCap size={24} />
         <span className="ml-3">Education</span>
       </h2>
       <ol className="mt-6 space-y-4">

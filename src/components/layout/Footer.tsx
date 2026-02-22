@@ -38,7 +38,7 @@ export function Footer() {
               </div>
               <div className='flex flex-col justify-center items-start'>
                 <div className='flex flex-row justify-end items-center gap-2'>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-muted-foreground" suppressHydrationWarning>
                     &copy; {new Date().getFullYear()} {name}. All rights reserved.
                   </p>
                   <ThemeToggle />

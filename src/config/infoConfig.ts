@@ -4,27 +4,28 @@ export * from './career'
 
 // personal info
 export const name = 'SnowCat'
-export const headline = '你好，我是雪豹'
+export const headline = 'Hello, My name is Panmingh'
 export const introduction = `
-如果你在一些游戏里面碰到ButterF1y，那也是我。
-右边那个会转的球基本代表了我的技术栈。
-还给大家埋了彩蛋☝️🤓`;
+I go by many names on the internet. If you come across Panmingh, SnowCat, Butterf1y, or Panminway, they all refer to me. 
+In any case, it’s nice to meet you.😃`;
 export const email = 'panmingh@outlook.com'
 export const githubUsername = 'snowcatsmoking'
 
+
 // about page
-export const aboutMeHeadline = '我是谁，我又会给你介绍什么'
+export const aboutMeHeadline = 'About Me'
 export const aboutParagraphs = [
-  "你好，我希望你称我为SnowCat。",
-  '我是一个北邮在读的学生，专业是电信工程及管理，但是我对计算机有着浓厚的兴趣，所以我会学习一些计算机相关的知识。',
-  '我是一个比较低调的人，平时也不怎么发朋友圈和空间，这次搞个网站是考虑到之后展示的时候更方便。',
-  '我不会把很多个人信息放到这个网站上来，但是我会不断打磨这个网站，也会分享一些技术报告，写给大家也写给自己。',
-  '右边是我的自拍。'
-]
+  "Hello, I’d like you to call me SnowCat.",
+  'I am currently preparing for my graduate applications for the Fall 2027 intake. If you have any advice, opportunities, or offers related to master’s or direct PhD applications, please feel free to contact me at any time.',
+  'I am now an undergraduate student at Beijing University of Posts and Telecommunications, majoring in Telecommunications Engineering and Management. I first got involved in AI during my sophomore year, starting with some simple AI application projects.',
+  'From my junior year onward, I began focusing on research projects, with a primary interest in large model safety and alignment. I am deeply interested in this field and have already produced several publications and preprints.',
+  'In my spare time, I enjoy working on interesting side projects, although my free time has been steadily decreasing. Most of my recent outputs are reflected in my publications.',
+  'I hope to continue maintaining stable and meaningful productivity in the years ahead.',
+  ]
 
 // blog
-export const blogHeadLine = "我最近在忙啥？"
-export const blogIntro =`暑期工作繁忙，开学后尝试稳定更新。部分工作仍在进行中恕难详解。`
+export const blogHeadLine = "What am I doing recently?"
+export const blogIntro =`I am going to writing some blogs to share my thoughts and ideas on AI safety, alignment, and related topics.`
 
 // social links
 export type SocialLinkType = {
@@ -36,38 +37,38 @@ export type SocialLinkType = {
 
 export const socialLinks: Array<SocialLinkType> = [
   {
+    name: 'GitHub',
+    ariaLabel: 'GitHub Profile',
+    icon: 'github',
+    href: 'https://github.com/snowcatsmoking',
+  },
+  {
     name: 'Bilibili',
     icon: 'bilibili',
     href: 'https://space.bilibili.com/1295215102',
   },
+  {
+    name: 'OpenReview',
+    ariaLabel: 'OpenReview Profile',
+    icon: 'openreview',
+    href: 'https://openreview.net/profile?id=~Minghui_Pan1',
+  },
 ]
+
+export const wechat = 'pmh13701459590'
 
 // https://simpleicons.org/
 export const techIcons = [
-  'milvus',
   'pytorch',
-  'linux',
-  'raspberrypi',
-  'java',
-  'valve',
-  'mysql',
-  'valorant',
-  'pycharm',
-  'ieee',
-  'republicofgamers',
+  'python',
+  'overleaf',
   'intellijidea',
-  'googlechrome',
-  'beijingsubway',
-  'docker',
   'git',
   'github',
-  'visualstudiocode',
-  'otto',
-  'ios',
-  'apple',
-  'wechat',
-  'onlyfans',
-  'langchain',
-  'openai',
-
+  'react',
+  'linux',
+  'huggingface',
+  'langgraph',
+  'arxiv',
+  'raspberrypi',
 ]

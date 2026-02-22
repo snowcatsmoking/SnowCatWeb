@@ -34,7 +34,9 @@ export default function About() {
           </h1>
           <div className="mt-6 space-y-7 text-xl text-zinc-700 dark:text-zinc-300">
             {aboutParagraphs.map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
+              <p key={index} className={index === 1 ? 'font-semibold text-teal-600 dark:text-teal-400' : ''}>
+                {paragraph}
+              </p>
             ))}
           </div>
         </div>

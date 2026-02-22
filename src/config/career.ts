@@ -1,40 +1,45 @@
-// career
+// coauthors
 export type CareerItemType = {
-    company: string
-    title: string
-    image?: string
-    logo: string
-    start: string
-    end: string
-  }
-  
+  company: string
+  title: string
+  image?: string
+  logo: string
+  start: string
+  end: string
+  href?: string
+}
+
 export const careerList: Array<CareerItemType> = [
-    {
-      company: '中科院信息工程研究所科研实习',
-      title: 'RA',
-      logo: 'college',
-      start: '2025-07',
-      end: '2025-09'
-    },
-    {
-      company: 'BUPT南国顺教授组科研实习',
-      title: '本科生coauthor',
-      logo: 'college',
-      start: '2025-07',
-      end: 'Present'
-    },
-    {
-      company: 'BuTP职业生涯规划',
-      title: '项目经理',
-      logo: 'college',
-      start: '2024',
-      end: 'Present'
-    },
-    {
-      company: '团委综合办公室',
-      title: '干事',
-      logo: 'college',
-      start: '2023',
-      end: '2024'
-    }
-  ]
+  {
+    company: 'Haolang Lu',
+    title: 'BUPT PhD Student',
+    logo: 'college',
+    start: '',
+    end: '',
+    href: 'https://openreview.net/profile?id=~Haolang_Lu1',
+  },  
+  {
+    company: 'Kun Wang',
+    title: 'NTU Postdoc',
+    logo: 'college',
+    start: '',
+    end: '',
+    href: 'https://scholar.google.com/citations?user=UnyqjWQAAAAJ&hl=en',
+  },
+  {
+    company: 'Guoshun Nan',
+    title: 'BUPT Professor',
+    logo: 'college',
+    start: '',
+    end: '',
+    href: 'https://scholar.google.com/citations?user=uSykWkMAAAAJ&hl=en',
+  },
+  {
+    company: 'Wentao Zhang',
+    title: 'PKU Assistant Professor',
+    logo: 'college',
+    start: '',
+    end: '',
+    href: 'https://scholar.google.com/citations?user=JE4VON0AAAAJ&hl=zh-CN',
+  },
+]

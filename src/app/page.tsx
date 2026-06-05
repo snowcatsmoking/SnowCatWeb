@@ -2,45 +2,99 @@ import { Container } from '@/components/layout/Container'
 import Career from '@/components/home/Career'
 import Education from '@/components/home/Education'
 import SocialLinks from '@/components/home/SocialLinks'
-import { headline, introduction } from '@/config/infoConfig'
+import { headline, introduction, blogHeadLine, blogIntro } from '@/config/infoConfig'
 import { BlogCard } from '@/components/home/BlogCard'
 import { getAllBlogs, type BlogType } from '@/lib/blogs'
 import { ProjectCard } from '@/components/project/ProjectCard'
 import { ActivityCard } from '@/components/home/ActivityCard'
-import { projectHeadLine, projectIntro, projects, blogHeadLine, blogIntro } from '@/config/infoConfig'
-import { awards, awardsHeadLine, awardsIntro, activities, activitiesHeadLine, activitiesIntro } from '@/config/projects'
-import TechIconGrid from '@/components/home/TechIconGrid'
-import { Award, Briefcase, Heart } from 'lucide-react'
+import { projectHeadLine, projectIntro, projects, awards, awardsHeadLine, awardsIntro, activities, activitiesHeadLine, activitiesIntro } from '@/config/projects'
+import { publications } from '@/config/publications'
+import { PublicationCard } from '@/components/research/PublicationCard'
+import Terminal from '@/components/home/Terminal'
+import Link from 'next/link'
+import { Award, Heart, FlaskConical, FolderOpen, ArrowRight } from 'lucide-react'
+
+const HIGHLIGHTS = [
+  'LLM safety and interpretability',
+  'agent safety',
+  'reinforcement learning',
+  'building things that actually work',
+  'open-source',
+  'ship',
+]
+
+function HighlightedText({ text }: { text: string }) {
+  const pattern = new RegExp(`(${HIGHLIGHTS.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'gi')
+  const parts = text.split(pattern)
+  return (
+    <>
+      {parts.map((part, i) =>
+        HIGHLIGHTS.some(h => h.toLowerCase() === part.toLowerCase()) ? (
+          <span key={i} className="font-semibold text-teal-600 dark:text-teal-400">{part}</span>
+        ) : (
+          part
+        )
+      )}
+    </>
+  )
+}
 
 export default async function Home() {
   let blogList = (await getAllBlogs()).slice(0, 4)
+  const recentPubs = publications.slice(0, 2)
 
   return (
     <>
       <Container className="mt-9">
-        {/* personal info */}
-        <div className="mb-10 grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-8 items-start">
+        {/* Hero — personal info */}
+        <div className="mb-10 grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-8 items-stretch">
           <div className='md:mt-20'>
-            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl opacity-80">
+            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl opacity-80">
               {headline}
             </h2>
-            <div className="mt-6 space-y-4 text-xl text-muted-foreground">
-              {introduction.split('\n').filter(Boolean).map((paragraph, index) => (
-                <p key={index} className={paragraph.startsWith('Chinese Version') ? 'font-semibold text-teal-600 dark:text-teal-400' : ''}>
-                  {paragraph}
+            <div className="mt-6 space-y-4 text-xl text-muted-foreground leading-relaxed">
+              {introduction.split('\n\n').filter(Boolean).map((paragraph, index) => (
+                <p key={index}>
+                  <HighlightedText text={paragraph.replace(/\n/g, ' ').trim()} />
                 </p>
               ))}
             </div>
             <SocialLinks className='mt-4 md:mt-4'/>
           </div>
-          <div className="md:mt-20 px-4">
-            <TechIconGrid />
+          <div className="md:mt-20 px-4 flex flex-col pb-12">
+            <p className="text-xs text-muted-foreground mb-2 text-center">
+              ===Interactive===
+              try typing a command below
+            </p>
+            <Terminal />
           </div>
         </div>
-        {/* Research & Projects */}
+
+{/* Recent Publications */}
+        <div className="mx-auto flex flex-col max-w-xl gap-6 lg:max-w-none my-4 py-8 border-t border-muted">
+          <div className="flex items-center justify-between">
+            <h2 className="flex flex-row items-center gap-2 text-xl font-semibold tracking-tight md:text-3xl opacity-80">
+              <FlaskConical size={28} />
+              Recent Publications
+            </h2>
+            <Link
+              href="/research"
+              className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors"
+            >
+              View all <ArrowRight size={14} />
+            </Link>
+          </div>
+          <ul className="divide-y divide-muted">
+            {recentPubs.map((pub) => (
+              <PublicationCard key={pub.title} pub={pub} />
+            ))}
+          </ul>
+        </div>
+
+        {/* Projects */}
         <div className="mx-auto flex flex-col max-w-xl gap-6 lg:max-w-none my-4 py-8 border-t border-muted">
           <h2 className="flex flex-row items-center justify-start gap-2 text-xl font-semibold tracking-tight md:text-3xl opacity-80 mb-4">
-            <Briefcase size={28}/>
+            <FolderOpen size={28}/>
             {projectHeadLine}
           </h2>
           <p className="text-base text-muted-foreground max-w-2xl mb-8">
@@ -55,6 +109,7 @@ export default async function Home() {
             ))}
           </ul>
         </div>
+
         {/* Awards */}
         <div className="mx-auto flex flex-col max-w-xl gap-6 lg:max-w-none my-4 py-8 border-t border-muted">
           <h2 className="flex flex-row items-center justify-start gap-2 text-xl font-semibold tracking-tight md:text-3xl opacity-80 mb-4">
@@ -73,7 +128,8 @@ export default async function Home() {
             ))}
           </ul>
         </div>
-        {/* Hobbies & Volunteer */}
+
+        {/* Hobbies & Contributions */}
         <div className="mx-auto flex flex-col max-w-xl gap-6 lg:max-w-none my-4 py-8 border-t border-muted">
           <h2 className="flex flex-row items-center justify-start gap-2 text-xl font-semibold tracking-tight md:text-3xl opacity-80 mb-4">
             <Heart size={28}/>
@@ -102,15 +158,11 @@ export default async function Home() {
           </p>
         </div>
         <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
-          {/* left column */}
-          {/* blog */}
           <div className="flex flex-col gap-16">
             {blogList.map((blog: BlogType) => (
               <BlogCard key={blog.slug} blog={blog} titleAs='h3'/>
             ))}
           </div>
-
-          {/* right column */}
           <div className="space-y-10 lg:pl-16 xl:pl-24">
             <Career />
             <Education />

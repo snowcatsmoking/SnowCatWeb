@@ -58,38 +58,17 @@ export const awards: Array<ActivityItemType> = [
   },
 ]
 
-// Research & Projects
-export const projectHeadLine = "Reasearch & Projects"
-export const projectIntro = "Sincere thanks to all my coauthors for their great work and support. Hope we can make more great things together."
+// Projects
+export const projectHeadLine = "Projects"
+export const projectIntro = "Side projects and engineering work. Most of them are things I built to scratch my own itch."
 
 export const projects: Array<ProjectItemType> = [
   {
-    name: 'ACL2026',
-    description: 'Streaming Hallucination Detection in Long Chain-of-Thought Reasoning',
-    link: { href: 'https://arxiv.org/abs/2601.02170v1', label: 'ACL' },
-    tags: ['Reasoning Model', 'LLM Safety'],
-    icon: 'arxiv'
-  },
-  {
-    name: 'ACL Industry Track 2026',
-    description: 'One-Eval: An Agentic System for Automated and Traceable LLM Evaluation',
-    link: { href: 'https://github.com/OpenDCAI/One-Eval', label: 'ACL_Industry' },
+    name: 'One-Eval',
+    description: 'An agentic system for automated and traceable LLM evaluation, built on top of DataFlow.',
+    link: { href: 'https://github.com/OpenDCAI/One-Eval', label: 'One-Eval' },
     tags: ['DCAI', 'Benchmark'],
-    icon: 'arxiv'
-  },
-  {
-    name: 'CVPR2026',
-    description: 'Reallocating Attention Across Layers to Reduce Multimodal Hallucination',
-    link: { href: 'https://arxiv.org/abs/2510.10285', label: 'CVPR' },
-    tags: ['MLLM', 'Inner Safety'],
-    icon: 'arxiv'
-  },
-    {
-    name: 'ICASSP2026',
-    description: 'Corrector: an execute-to-correct paradigm for efficient llm secure inference',
-    link: { href: '#', label: '文章尚未公开' },
-    tags: ['LLM','Security'],
-    icon: 'arxiv'
+    icon: 'github'
   },
   {
     name: 'LoopLM',
@@ -104,15 +83,6 @@ export const projects: Array<ProjectItemType> = [
 export const activitiesHeadLine = "Hobbies & Contributions"
 export const activitiesIntro = "Some side projects I built for fun. Most of them are small tools that scratch my own itch."
 export const activities: Array<ActivityItemType> = [
-  {
-    name: 'One-Eval',
-    description:
-      'A subtree of DataFlow, focusing on automated evaluation of LLMs.',
-    date: '2026-01',
-    location: 'Beijing',
-    link:'https://github.com/OpenDCAI/One-Eval',
-    icon: 'openai'
-  },
   {
     name: 'Friberg',
     description:

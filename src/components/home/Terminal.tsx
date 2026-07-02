@@ -22,6 +22,7 @@ type OutputLine = {
   type?: 'cmd' | 'error' | 'system' | 'dir' | 'file' | 'link' | 'success'
   href?: string
   segments?: Segment[]  // if set, render instead of text
+  instant?: boolean     // if set, appear whole (skip char-by-char) — e.g. ASCII art
 }
 
 // Guestbook multi-step state
@@ -57,6 +58,7 @@ function makeNeofetch(): OutputLine[] {
     text: '',
     type: 'system' as const,
     segments: [{ text: a, color: 'purple' as const }, ...(info[i] ?? [])],
+    instant: true,  // ASCII art — reveal whole, not char-by-char
   }))
 }
 
@@ -98,6 +100,12 @@ const WELCOME: OutputLine[] = [
 
 let lineId = 200
 
+// number of visible characters in a line (segments count as their combined text)
+function lineLength(line: OutputLine): number {
+  if (line.segments) return line.segments.reduce((n, s) => n + s.text.length, 0)
+  return line.text.length
+}
+
 function makeLines(lines: (string | { text: string; type?: OutputLine['type']; href?: string })[], defaultType?: OutputLine['type']): OutputLine[] {
   return lines.map((l) => {
     if (typeof l === 'string') return { id: lineId++, text: l, type: defaultType }
@@ -115,7 +123,11 @@ export default function Terminal() {
   const [history, setHistory] = useState<string[]>([])
   const [historyIndex, setHistoryIndex] = useState(-1)
   const [isActive, setIsActive] = useState(false)
-  const [typingQueue, setTypingQueue] = useState<{ lines: OutputLine[] } | null>(null)
+  // 'char' = boot banner, revealed character-by-character; 'line' = command
+  // output, revealed one whole line at a time (matches the original terminal feel)
+  const [typingQueue, setTypingQueue] = useState<{ lines: OutputLine[]; mode: 'char' | 'line' } | null>(null)
+  // the line currently being revealed character-by-character (char mode only)
+  const [typingLine, setTypingLine] = useState<{ line: OutputLine; shown: number } | null>(null)
 
   // filesystem state
   const [cwd, setCwd] = useState<string[]>([])
@@ -133,26 +145,73 @@ export default function Terminal() {
   useEffect(() => {
     const el = outputRef.current
     if (el) el.scrollTop = el.scrollHeight
-  }, [output])
+  }, [output, typingLine])
 
-  // typewriter effect — one line at a time
+  // typewriter effect — pull the next queued line and begin revealing it
   useEffect(() => {
+    // wait for the active line to finish before pulling the next one
+    if (typingLine) return
     if (!typingQueue || typingQueue.lines.length === 0) {
-      setTypingQueue(null)
+      if (typingQueue) setTypingQueue(null)
       return
     }
+    const { mode } = typingQueue
     const [first, ...rest] = typingQueue.lines
-    // command lines pause a beat longer (sell the "fetch"); blanks a touch slower than text
-    const delay = first.type === 'cmd' ? 320 : first.text === '' ? 40 : 55
-    const timer = setTimeout(() => {
-      setOutput((prev) => [...prev, first])
-      setTypingQueue(rest.length > 0 ? { lines: rest } : null)
-    }, delay)
-    return () => clearTimeout(timer)
-  }, [typingQueue])
+    const advanceQueue = () => setTypingQueue(rest.length > 0 ? { lines: rest, mode } : null)
 
+    // 'line' mode (command output): reveal one whole line at a time, ~22ms apart —
+    // the original terminal cadence
+    if (mode === 'line') {
+      const delay = first.text === '' && !first.segments ? 30 : 22
+      const timer = setTimeout(() => {
+        setOutput((prev) => [...prev, first])
+        advanceQueue()
+      }, delay)
+      return () => clearTimeout(timer)
+    }
+
+    // 'char' mode (boot banner): blank lines and `instant` lines (ASCII art) appear
+    // whole — a char-by-char reveal on those looks broken; everything else types out
+    if (first.instant || lineLength(first) === 0) {
+      const delay = 20
+      const timer = setTimeout(() => {
+        setOutput((prev) => [...prev, first])
+        advanceQueue()
+      }, delay)
+      return () => clearTimeout(timer)
+    }
+
+    // typed line: pause a beat before it starts (a touch longer for the command
+    // line), then hand off to the per-character effect below. Timings are tuned so
+    // the whole banner finishes ~1.8s — in step with the hero "I'm SnowCat" title.
+    // Drop it from the queue now; the char effect owns committing it to output.
+    const startDelay = first.type === 'cmd' ? 120 : 20
+    const timer = setTimeout(() => {
+      setTypingLine({ line: first, shown: 0 })
+      advanceQueue()
+    }, startDelay)
+    return () => clearTimeout(timer)
+  }, [typingQueue, typingLine])
+
+  // reveal the active line one character at a time
+  useEffect(() => {
+    if (!typingLine) return
+    const { line, shown } = typingLine
+    if (shown >= lineLength(line)) {
+      // done — commit the finished line; the queue effect pulls the next
+      setOutput((prev) => [...prev, line])
+      setTypingLine(null)
+      return
+    }
+    // ~7ms/char — fast, so the banner finishes ~in step with the hero title
+    const timer = setTimeout(() => setTypingLine({ line, shown: shown + 1 }), 7)
+    return () => clearTimeout(timer)
+  }, [typingLine])
+
+  // command output streams one line at a time — the original terminal cadence.
+  // (The character-by-character typewriter is reserved for the boot banner.)
   const pushLines = useCallback((lines: OutputLine[]) => {
-    setTypingQueue({ lines })
+    setTypingQueue({ lines, mode: 'line' })
   }, [])
 
   const pushImmediate = useCallback((lines: OutputLine[]) => {
@@ -163,13 +222,13 @@ export default function Terminal() {
   useEffect(() => {
     if (booted) return
     setBooted(true)
-    setTypingQueue({ lines: WELCOME })
+    setTypingQueue({ lines: WELCOME, mode: 'char' })
   }, [booted])
 
   // ── command handlers ──────────────────────────────────────────────────────
 
   const handleNormalCommand = useCallback((cmd: string) => {
-    if (cmd === 'clear') { setOutput([]); return }
+    if (cmd === 'clear') { setOutput([]); setTypingQueue(null); setTypingLine(null); return }
 
     // pwd
     if (cmd === 'pwd') {
@@ -487,12 +546,15 @@ export default function Terminal() {
       setOutput((prev) => [...prev, { id: lineId++, text: `$ ${input}^C`, type: 'cmd' }])
       setInput('')
       setTypingQueue(null)
+      setTypingLine(null)
       setGuestbook({ step: 'idle' })
       setCompletions([])
       setCompletionIndex(-1)
     } else if (e.key === 'l' && e.ctrlKey) {
       e.preventDefault()
       setOutput([])
+      setTypingQueue(null)
+      setTypingLine(null)
     } else if (e.key === 'u' && e.ctrlKey) {
       e.preventDefault()
       setInput('')
@@ -511,6 +573,11 @@ export default function Terminal() {
   const promptStr = guestbook.step !== 'idle'
     ? ''
     : `visitor@snowcat:${cwdString(cwd)}$`
+
+  // hide the input prompt only while the boot banner (char mode) is playing —
+  // otherwise the prompt sits below and text appears to type above it. Command
+  // output (line mode) keeps the prompt visible, matching the original behavior.
+  const isBooting = typingLine !== null || typingQueue?.mode === 'char'
 
   // theme palette
   const p = isDark ? {
@@ -576,17 +643,22 @@ export default function Terminal() {
     yellow: 'text-[#7d4e00]',
   }
 
-  function renderLine(line: OutputLine) {
+  // `limit` (visible char count) truncates the line mid-reveal; undefined = full line
+  function renderLine(line: OutputLine, limit?: number) {
     if (line.segments) {
+      let remaining = limit ?? Infinity
       return (
         <pre className="whitespace-pre-wrap break-words font-mono leading-5">
-          {line.segments.map((seg, i) => (
-            <span key={i} className={seg.color ? segColor[seg.color] : undefined}>{seg.text}</span>
-          ))}
+          {line.segments.map((seg, i) => {
+            const text = remaining >= seg.text.length ? seg.text : seg.text.slice(0, Math.max(0, remaining))
+            remaining -= seg.text.length
+            return <span key={i} className={seg.color ? segColor[seg.color] : undefined}>{text}</span>
+          })}
         </pre>
       )
     }
-    return <pre className="whitespace-pre-wrap break-words font-mono leading-5">{line.text || ' '}</pre>
+    const text = limit === undefined ? line.text : line.text.slice(0, limit)
+    return <pre className="whitespace-pre-wrap break-words font-mono leading-5">{text || ' '}</pre>
   }
 
   return (
@@ -621,7 +693,15 @@ export default function Terminal() {
           </div>
         ))}
 
-        {/* prompt line */}
+        {/* line currently being typed out, character by character */}
+        {typingLine && (
+          <div className={lineClass(typingLine.line)}>
+            {renderLine(typingLine.line, typingLine.shown)}
+          </div>
+        )}
+
+        {/* prompt line — hidden while the boot banner is playing */}
+        {!isBooting && (
         <div className={`flex items-center ${p.prompt}`}>
           {promptStr && <span className={`${p.cmd} mr-2`}>{promptStr}</span>}
           <span className="flex-1 relative">
@@ -647,6 +727,7 @@ export default function Terminal() {
             <span className={`inline-block w-[0.5ch] h-[1em] ${p.cursor} align-middle ml-[1px] ${isActive ? 'animate-pulse' : 'opacity-30'}`} />
           </span>
         </div>
+        )}
 
         {/* tab completions hint */}
         {completions.length > 1 && (

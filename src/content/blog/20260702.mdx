@@ -1,0 +1,140 @@
+---
+title: '再见了，弗小弟👋'
+description: '再见了，所有的弗里伯格...'
+date: '2026-07-02'
+tags: ['Web', 'WebSocket', 'Chrome Extension', 'CSGO', '工程']
+---
+
+一年前我写过一篇[《BLAST弗一把速通脚本的算法实现》](/blogs/friberg)，讲了怎么用信息熵去猜 Counter-Strikle 里的职业选手。当时结尾还留了个"未来拓展"的清单：浏览器插件化、一键调用、可视化等等。
+
+这一年过去，[forsaken](https://github.com/snowcatsmoking/forsaken) 这个坑我算是彻底填平了。没有修改任何算法层面的内容，信息熵还是那个信息熵，权重还是那套瞎凑的权重（我甚至没好意思重新凹参数），修改的是整个框架的实现。
+
+这篇 blog 就只讲这一年我对 web dev 的理解变深之后，是怎么把整套东西做成自动化的。
+
+### 一年前那个东西，到底"半"在哪
+
+当年的流程，说白了是这样的：人打开浏览器进游戏，手动去看页面返回的反馈，把反馈**手抄/复制成 JSON** 喂给终端里的 Python 脚本，脚本算出下一步该猜谁，人再把结果**手动填回**游戏里，然后循环。
+
+算法是聪明的，但**整个系统的 I/O 层是我这个人肉**。脚本永远停在 `input()` 那一行等我。我说实话，这个速度能否赢得过现在的xianhe还有待商榷。
+
+这没办法，当时对Web的理解太浅了，加上去年的这个时候还是cursor时代，CC甚至还没出现，所以没有能力实现原来的这个功能。
+
+接下来稍微讲解一下现在这个全自动弗一把是怎么实现的。
+
+### 一：全过程通过后端接口实现
+
+**页面上看到的每一格反馈，本质都是一次网络请求的返回。游戏页面只是接口的一层皮。**
+
+每日挑战那边，提交猜测其实就是往官方接口 POST 一个 playerId：
+
+```python
+GUESS_URL = "https://api.blast.tv/v1/counterstrikle/guesses"
+
+def submit_guess(session, player_id):
+    payload = {
+        "playerId": player_id,
+        "timestamp": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+    }
+    response = session.post(GUESS_URL, json=payload, headers=HEADERS)
+    response.raise_for_status()
+    return response.json()
+```
+
+反馈就在返回的 JSON 里，逐属性、结构化、干干净净。**根本不需要人去看页面。**
+
+
+```python
+for step in range(1, max_guesses + 1):
+    guess = analyzer.choose_next_guess()      # 算法：下一步猜谁
+    feedback = submit_guess(session, guess["id"])  # web：直接打接口
+    if feedback.get("isSuccess"):
+        ...  # 命中，收工
+    analyzer.update_possibilities(feedback)   # 算法：用真实反馈收敛
+```
+
+`算法出招 → 打接口 → 拿真反馈 → 收敛 → 再出招`，一条命令 `python -m solver.daily_solve` 跑到底，2-3 步锁人，全程我一根手指没动。
+
+### 二：对战模式没接口，那就把接口搞出来
+
+每日挑战好办，一个 REST 接口就完事了。但对战（multiplayer）模式是**实时对局**，走的是 WebSocket，状态一直在变。这里没有一个你 POST 一下就完的接口，游戏状态是**推**给你的。
+
+解决方法是：**页面自己会建 WebSocket 连接，那我就在它建之前，把 `window.WebSocket` 换成我的。**
+
+这就是插件里那段我个人最得意的代码——一个 Manifest V3 扩展，用原生 `world: "MAIN"` 在 `document_start` 时机注入 [`ws_hook.js`](https://github.com/snowcatsmoking/forsaken/blob/main/extension/ws_hook.js)：
+
+```js
+const NativeWebSocket = window.WebSocket;
+let gameSocket = null;
+
+function HookedWebSocket(url, protocols) {
+  const ws = protocols === undefined
+    ? new NativeWebSocket(url)
+    : new NativeWebSocket(url, protocols);
+
+  if (isGameSocketUrl(url)) {        // 只认游戏那条连接
+    gameSocket = ws;
+    ws.addEventListener("message", (event) => {
+      // 把每一帧对局数据 postMessage 出去给 content script
+      window.postMessage({ __strikleFeed: true, direction: "in", data: event.data }, "*");
+    });
+  }
+  return ws;
+}
+
+HookedWebSocket.prototype = NativeWebSocket.prototype;
+Object.setPrototypeOf(HookedWebSocket, NativeWebSocket);
+window.WebSocket = HookedWebSocket;   // 偷梁换柱
+```
+
+数据这样源源不断被劫出来，content script 解析对局状态，用一份和 Python 等价的 JS 版信息熵算法 [`analyzer.js`](https://github.com/snowcatsmoking/forsaken/blob/main/extension/analyzer.js) 算出最优猜测，再用 Shadow DOM 浮层显示在右上角。到这一步是"提示弗"——它告诉你该猜谁。
+
+然后我把这条路**反过来又走了一遍**，做成"自动弗"：既然我能劫持这个 socket 收消息，那我也能让它替我发消息。content script 把要提交的猜测 `postMessage` 回 MAIN world，被劫持的那个 WebSocket 直接 `send()` 出去：
+
+```js
+window.addEventListener("message", (event) => {
+  const msg = event.data;
+  if (!msg || !msg.__strikleSend) return;
+  if (gameSocket && gameSocket.readyState === NativeWebSocket.OPEN) {
+    gameSocket.send(msg.data);       // 用页面自己的连接，替我出手
+  }
+});
+```
+
+至此，对战模式也闭环了：**实时状态进来 → 算法算 → 猜测原路发回去**。
+
+### 三：数据也得自己会更新
+
+还有最后一块。选手库是会过期的——赛事一更新，新选手一来，算法再聪明也猜不到一个它数据库里根本没有的人。
+
+今天又打开弗一把的时候，人数相比去年250多到337，有明显多了很多。
+
+这次插件面板底部就一个 **⟳ 更新选手库** 按钮。点一下，插件直连官方 API 把全部选手重抓一遍，带实时进度，结果直接写进 `chrome.storage.local`。加载时先读用户手动更新过的 `chrome.storage.local`，没有再回落到插件内置的 `players_data.json`：
+
+```js
+const stored = await chrome.storage.local.get(STORAGE_KEY);
+// 有用户更新过的就用新库，否则回落内置 JSON
+```
+
+更新一次长期生效，下次进房自动加载新库，不用重装扩展、不用碰任何文件。
+
+### 如果27年的这个时候还在弗
+
+填平一个坑，顺手挖下一个。
+
+现在这套信息熵的速度不够快，说好听点是多维，说实话**主要就是二维多一点**：真正起作用的是**年龄**和 **Major 参赛次数**这两个数值属性，偶尔靠**定位（role）**补一刀，国籍和战队大多数时候只是陪跑。
+
+但这游戏其实**还有一个我从来没用过的信息**——那个 close 的**黄色提示**。它不只表示"数值接近"：在**地区**这一维上，黄色的意思是"你猜的这个人所属的国家，和目标**同一个大洲、或者同一个赛区**"。做成了，收敛应该还能再快一截。
+
+这边的问题就在于选手的国籍是自然语言，不是数字，这个玩意不方便做分类。
+
+所以下一个坑是这样的：把"黄色 = 同洲/同区"这条软信息真正建模进信息熵里。这大概率要动到**数据清洗**——现在的选手数据里，国籍、赛区的表述并不规整，得先把国家→大洲→CS 赛区这套映射洗干净、对齐，才谈得上让算法去利用"接近"而不只是"命中/错误"。做成了，收敛应该还能再快一截。
+
+这个坑，留给下一年那个（希望）更NB一点的我，或者更NB的Claude。
+
+---
+
+## 致谢
+
+- 玩机器 machine 的弗开策略
+- 感谢 xianhe 不知道为什么把这个游戏从垃圾堆里翻了出来，期末周期间玩得很爽
+- BLAST.tv 一如既往低劣的反爬意识，成全了这一切

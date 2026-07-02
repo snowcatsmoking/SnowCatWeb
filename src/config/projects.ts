@@ -87,7 +87,7 @@ export const activities: Array<ActivityItemType> = [
     name: 'Friberg',
     description:
       'An entropy-based script that solves the CS2 Friberg Game in the minimum number of guesses.',
-    date: '2025-07',
+    date: '2026-07',
     location: 'Beijing',
     link:'https://github.com/snowcatsmoking/forsaken',
     icon: 'counterstrike'

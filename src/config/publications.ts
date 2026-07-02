@@ -107,7 +107,7 @@ export const publications: Array<PublicationItemType> = [
     year: '2026',
     track: 'Poster',
     links: {
-      paper: 'https://cmsworkshops.com/ICASSP2026/papers/accepted_papers.php',
+      paper: 'https://ieeexplore.ieee.org/abstract/document/11462929',
     },
     image: 'icassp2026.png',
   },

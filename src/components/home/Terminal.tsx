@@ -109,8 +109,9 @@ export default function Terminal() {
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === 'dark'
 
-  const [output, setOutput] = useState<OutputLine[]>(WELCOME)
+  const [output, setOutput] = useState<OutputLine[]>([])
   const [input, setInput] = useState('')
+  const [booted, setBooted] = useState(false)
   const [history, setHistory] = useState<string[]>([])
   const [historyIndex, setHistoryIndex] = useState(-1)
   const [isActive, setIsActive] = useState(false)
@@ -141,7 +142,8 @@ export default function Terminal() {
       return
     }
     const [first, ...rest] = typingQueue.lines
-    const delay = first.text === '' ? 30 : 22
+    // command lines pause a beat longer (sell the "fetch"); blanks a touch slower than text
+    const delay = first.type === 'cmd' ? 320 : first.text === '' ? 40 : 55
     const timer = setTimeout(() => {
       setOutput((prev) => [...prev, first])
       setTypingQueue(rest.length > 0 ? { lines: rest } : null)
@@ -156,6 +158,13 @@ export default function Terminal() {
   const pushImmediate = useCallback((lines: OutputLine[]) => {
     setOutput((prev) => [...prev, ...lines])
   }, [])
+
+  // boot sequence — stream the welcome banner through the typewriter on mount
+  useEffect(() => {
+    if (booted) return
+    setBooted(true)
+    setTypingQueue({ lines: WELCOME })
+  }, [booted])
 
   // ── command handlers ──────────────────────────────────────────────────────
 

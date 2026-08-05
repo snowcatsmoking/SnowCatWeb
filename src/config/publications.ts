@@ -24,6 +24,7 @@ export type PublicationItemType = {
     slides?: string
     code?: string
     project?: string
+    dataset?: string
   }
   image?: string  // filename under public/images/papers/
 }
@@ -32,6 +33,25 @@ export const publicationsHeadLine = 'Publications'
 export const publicationsIntro = 'Sincere thanks to all my coauthors for their great work and support.'
 
 export const publications: Array<PublicationItemType> = [
+  {
+    title: 'Tool Specifications Matter: Uncovering and Mitigating Safety Risks in AI Agents',
+    authors: [
+      { name: 'Minghui Pan', bold: true},
+      { name: 'Jiayuxuan Yang'},
+      { name: 'Yuanyuan Yuan'},
+      { name: 'Yu Jiang' },
+      { name: 'Zhenpeng Chen', corresponding: true},
+    ],
+    venue: 'Arxiv',
+    year: '2026',
+    track: 'Preprint',
+    links: {
+      paper: 'https://arxiv.org/abs/2607.29254',
+      code: 'https://github.com/snowcatsmoking/SafeKeep',
+      dataset: 'https://huggingface.co/datasets/Panminghui/safekeep-paired-data',
+    },
+    image: 'aaai2027.png',
+  },
   {
     // Haolang Lu*, Minghui Pan*, ..., Guoshun Nan†
     title: 'Streaming Hallucination Detection in Long Chain-of-Thought Reasoning',

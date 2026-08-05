@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { FileText, Presentation, Code, Globe, BookOpen } from 'lucide-react'
+import { FileText, Presentation, Code, Globe, BookOpen, Database } from 'lucide-react'
 import { AuthorType, PublicationItemType } from '@/config/publications'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
@@ -154,6 +154,18 @@ export function PublicationCard({ pub }: { pub: PublicationItemType }) {
             >
               <Code size={15} />
               <span>Code</span>
+            </Link>
+          )}
+          {pub.links.dataset && (
+            <Link
+              href={pub.links.dataset}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Dataset"
+              className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Database size={15} />
+              <span>Dataset</span>
             </Link>
           )}
           {pub.links.project && (

@@ -67,6 +67,29 @@ export const socialLinks: Array<SocialLinkType> = [
 
 export const wechat = 'pmh13701459590'
 
+// documents (resume / transcript, etc.)
+export type DocumentLinkType = {
+  name: string
+  description: string
+  href: string
+  downloadName: string
+}
+
+export const documents: Array<DocumentLinkType> = [
+  {
+    name: 'Curriculum Vitae',
+    description: 'My CV, updated August 2026',
+    href: '/files/cv_eng.pdf',
+    downloadName: 'Minghui_Pan_CV.pdf',
+  },
+  {
+    name: 'Academic Transcript',
+    description: 'Official transcript from BUPT',
+    href: '/files/transripts.pdf',
+    downloadName: 'Minghui_Pan_Transcript.pdf',
+  },
+]
+
 // https://simpleicons.org/
 export const techIcons = [
   'pytorch',

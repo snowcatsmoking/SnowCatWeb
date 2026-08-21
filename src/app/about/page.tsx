@@ -7,6 +7,7 @@ import { Container } from '@/components/layout/Container'
 
 import portraitImage from '@/images/portrait.jpg'
 import SocialLinks from '@/components/about/SocialLinks'
+import Documents from '@/components/about/Documents'
 
 export const metadata: Metadata = {
   title: 'About',
@@ -42,6 +43,7 @@ export default function About() {
         </div>
         <div className="lg:pl-20">
           <SocialLinks />
+          <Documents />
         </div>
       </div>
     </Container>

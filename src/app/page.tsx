@@ -2,6 +2,7 @@ import { Container } from '@/components/layout/Container'
 import Career from '@/components/home/Career'
 import Education from '@/components/home/Education'
 import SocialLinks from '@/components/home/SocialLinks'
+import Documents from '@/components/home/Documents'
 import { headline, introduction, blogHeadLine, blogIntro } from '@/config/infoConfig'
 import { BlogCard } from '@/components/home/BlogCard'
 import { getAllBlogs, type BlogType } from '@/lib/blogs'
@@ -60,6 +61,7 @@ export default async function Home() {
               ))}
             </div>
             <SocialLinks className='mt-4 md:mt-4'/>
+            <Documents className='mt-6' />
           </div>
           <div className="md:mt-20 px-4 flex flex-col pb-12">
             <p className="text-xs text-muted-foreground mb-2 text-center">

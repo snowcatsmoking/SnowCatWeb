@@ -16,6 +16,8 @@ import {
   Television,
   TiktokLogo,
   Smiley,
+  FilePdf,
+  DownloadSimple,
 } from '@phosphor-icons/react'
 
 export function CustomIcon({
@@ -58,6 +60,10 @@ export function CustomIcon({
       return <GraduationCap size={size} weight="duotone" />
     case 'huggingface':
       return <Smiley size={size} weight="duotone" />
+    case 'file-pdf':
+      return <FilePdf size={size} weight="duotone" />
+    case 'download':
+      return <DownloadSimple size={size} weight="bold" />
     default:
       return null
   }
